@@ -1,0 +1,123 @@
+% A5 Lab Report
+% Brandon Stiene
+% October 27, 2014
+
+# Benchmarking the ArrayStrand implementation
+
+## Show that ArrayStrand.cutAndSplice() is O(N)
+
+ecolimed.dat
+DNA length = 320160
+Restiction enzyme = gaattc
+
+ArrayStrand:	 splice length	                  256 	 time 	 0.016 recombinant length              331,410
+ArrayStrand:	 splice length	                  512 	 time 	 0.015 recombinant length              342,930
+ArrayStrand:	 splice length	                1,024 	 time 	 0.000 recombinant length              365,970
+ArrayStrand:	 splice length	                2,048 	 time 	 0.016 recombinant length              412,050
+ArrayStrand:	 splice length	                4,096 	 time 	 0.000 recombinant length              504,210
+ArrayStrand:	 splice length	                8,192 	 time 	 0.000 recombinant length              688,530
+ArrayStrand:	 splice length	               16,384 	 time 	 0.015 recombinant length            1,057,170
+ArrayStrand:	 splice length	               32,768 	 time 	 0.000 recombinant length            1,794,450
+ArrayStrand:	 splice length	               65,536 	 time 	 0.016 recombinant length            3,269,010
+ArrayStrand:	 splice length	              131,072 	 time 	 0.031 recombinant length            6,218,130
+ArrayStrand:	 splice length	              262,144 	 time 	 0.047 recombinant length           12,116,370
+ArrayStrand:	 splice length	              524,288 	 time 	 0.125 recombinant length           23,912,850
+ArrayStrand:	 splice length	            1,048,576 	 time 	 0.266 recombinant length           47,505,810
+ArrayStrand:	 splice length	            2,097,152 	 time 	 0.500 recombinant length           94,691,730
+ArrayStrand:	 splice length	            4,194,304 	 time 	 1.646 recombinant length          189,063,570
+ArrayStrand:	 splice length	            8,388,608 	 time 	 3.828 recombinant length          377,807,250
+
+ecoli.dat
+DNA length = 4639221
+Restiction enzyme = gaattc
+
+ArrayStrand:	 splice length	                  256 	 time 	 0.078 recombinant length            4,800,471
+ArrayStrand:	 splice length	                  512 	 time 	 0.062 recombinant length            4,965,591
+ArrayStrand:	 splice length	                1,024 	 time 	 0.063 recombinant length            5,295,831
+ArrayStrand:	 splice length	                2,048 	 time 	 0.078 recombinant length            5,956,311
+ArrayStrand:	 splice length	                4,096 	 time 	 0.047 recombinant length            7,277,271
+ArrayStrand:	 splice length	                8,192 	 time 	 0.078 recombinant length            9,919,191
+ArrayStrand:	 splice length	               16,384 	 time 	 0.079 recombinant length           15,203,031
+ArrayStrand:	 splice length	               32,768 	 time 	 0.125 recombinant length           25,770,711
+ArrayStrand:	 splice length	               65,536 	 time 	 0.250 recombinant length           46,906,071
+ArrayStrand:	 splice length	              131,072 	 time 	 0.578 recombinant length           89,176,791
+ArrayStrand:	 splice length	              262,144 	 time 	 0.953 recombinant length          173,718,231
+ArrayStrand:	 splice length	              524,288 	 time 	 3.031 recombinant length          342,801,111
+
+By looking at the output provided by the DNASimulation class of both data files, we can see that, as splice length increases by 2 and recombinant length increases by 2, computation time increases approximately by a factor of 2.
+This leads us to the conclusion of a time complexity of O(N).
+
+## Determine the largest power-of-two splice supported with 512M heap
+
+ecoli.dat
+DNA length = 4639221
+Restiction enzyme = gaattc
+
+ArrayStrand:	 splice length	                  256 	 time 	 0.094 recombinant length            4,800,471
+ArrayStrand:	 splice length	                  512 	 time 	 0.063 recombinant length            4,965,591
+ArrayStrand:	 splice length	                1,024 	 time 	 0.062 recombinant length            5,295,831
+ArrayStrand:	 splice length	                2,048 	 time 	 0.063 recombinant length            5,956,311
+ArrayStrand:	 splice length	                4,096 	 time 	 0.047 recombinant length            7,277,271
+ArrayStrand:	 splice length	                8,192 	 time 	 0.078 recombinant length            9,919,191
+ArrayStrand:	 splice length	               16,384 	 time 	 0.110 recombinant length           15,203,031
+ArrayStrand:	 splice length	               32,768 	 time 	 0.156 recombinant length           25,770,711
+
+With an initial splice length of 256, we see that the largest power-of-two slice supported with a 512M heap is 7.
+
+## Determine the largest power-of-two splice supported with 1024M heap
+
+ecoli.dat
+DNA length = 4639221
+Restiction enzyme = gaattc
+
+ArrayStrand:	 splice length	                  256 	 time 	 0.094 recombinant length            4,800,471
+ArrayStrand:	 splice length	                  512 	 time 	 0.062 recombinant length            4,965,591
+ArrayStrand:	 splice length	                1,024 	 time 	 0.079 recombinant length            5,295,831
+ArrayStrand:	 splice length	                2,048 	 time 	 0.062 recombinant length            5,956,311
+ArrayStrand:	 splice length	                4,096 	 time 	 0.047 recombinant length            7,277,271
+ArrayStrand:	 splice length	                8,192 	 time 	 0.063 recombinant length            9,919,191
+ArrayStrand:	 splice length	               16,384 	 time 	 0.081 recombinant length           15,203,031
+ArrayStrand:	 splice length	               32,768 	 time 	 0.140 recombinant length           25,770,711
+ArrayStrand:	 splice length	               65,536 	 time 	 0.250 recombinant length           46,906,071
+ArrayStrand:	 splice length	              131,072 	 time 	 0.594 recombinant length           89,176,791
+
+With an initial splice length of 256, we see that the largest power-of-two slice supported with a 512M heap is 9.
+With twice the memory allowed, we see that it takes about twice as long to compute the next consecutive splice length.
+
+## Determine the largest power-of-two splice supported as heap doubles
+
+ecoli.dat
+heap size: 8GB
+DNA length = 4639221
+Restiction enzyme = gaattc
+
+ArrayStrand:	 splice length	                  256 	 time 	 0.093 recombinant length            4,800,471
+ArrayStrand:	 splice length	                  512 	 time 	 0.079 recombinant length            4,965,591
+ArrayStrand:	 splice length	                1,024 	 time 	 0.062 recombinant length            5,295,831
+ArrayStrand:	 splice length	                2,048 	 time 	 0.063 recombinant length            5,956,311
+ArrayStrand:	 splice length	                4,096 	 time 	 0.046 recombinant length            7,277,271
+ArrayStrand:	 splice length	                8,192 	 time 	 0.063 recombinant length            9,919,191
+ArrayStrand:	 splice length	               16,384 	 time 	 0.079 recombinant length           15,203,031
+ArrayStrand:	 splice length	               32,768 	 time 	 0.125 recombinant length           25,770,711
+ArrayStrand:	 splice length	               65,536 	 time 	 0.250 recombinant length           46,906,071
+ArrayStrand:	 splice length	              131,072 	 time 	 0.609 recombinant length           89,176,791
+ArrayStrand:	 splice length	              262,144 	 time 	 1.016 recombinant length          173,718,231
+ArrayStrand:	 splice length	              524,288 	 time 	 1.964 recombinant length          342,801,111
+ArrayStrand:	 splice length	            1,048,576 	 time 	 6.335 recombinant length          680,966,871
+
+With an initial splice length of 256, we see that the largest power-of-two slice supported with a 512M heap is 12.
+With twice the memory allowed, we see that it takes about twice as long to compute the next consecutive splice length.
+
+# Verifying the LinkedStrand implementation
+
+## Show that LinkedStrand.cutAndSplice() is O(1)
+Record your response here.
+
+## Determine the largest power-of-two splice supported with 512M heap
+Record your response here.
+
+## Determine the largest power-of-two splice supported with 1024M heap
+Record your response here.
+
+## Determine the largest power-of-two splice supported as heap doubles
+Record your response here.
